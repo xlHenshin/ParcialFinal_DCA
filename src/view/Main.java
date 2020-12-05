@@ -57,10 +57,4 @@ public class Main extends PApplet{
 			gameScreen.moveDown();
 		}
 	}
-	
-	public void mousePressed() {
-		
-		System.out.println(mouseX);
-		System.out.println(mouseY);
-	}
 }

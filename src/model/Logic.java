@@ -1,6 +1,5 @@
 package model;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -44,7 +43,13 @@ public class Logic {
 		seg=0;
 		min=0;
 		
-		readTxt();
+		try {
+			readTxt();
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		
 		createCars();
 	}
 	
@@ -53,7 +58,6 @@ public class Logic {
 		for (int i = 0; i < file.length; i++) {
 			
 			String items = file[i];
-			System.out.println(items);
 			
 			String [] data = file[i].split(",");
 			
@@ -351,7 +355,14 @@ public class Logic {
 				car.clear();
 				end=0;
 				gameOver=false;
-				readTxt();
+				
+				try {
+					readTxt();
+				} catch (Exception e) {
+					// TODO: handle exception
+					e.printStackTrace();
+				}
+				
 				createCars();
 				win=false;
 				lose=false;
