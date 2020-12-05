@@ -18,6 +18,8 @@ public class Logic {
 		file = app.loadStrings("../Resources/file.txt");
 		car= new ArrayList<Car>();
 		readTxt();
+		createCars();
+		System.out.println("Autos= " + car.size());
 	}
 	
 	public void readTxt() {
@@ -45,18 +47,84 @@ public class Logic {
 			}
 		}
 		
-		System.out.println(car.size());
+		System.out.println("Autos creados con el txt= " + car.size());
 	}
 	
 	public void createCars() {
 		
-		int random;
+		int dir;
+		int posX;
 		
-		for (int i = 0; i < 26; i++) {
+		for (int i = 0; i < 3; i++) {
 			
-			random = (int) app.random(1,6);
+			dir=(int) app.random(-3,3);
+			posX= (int) app.random(50,750);
 			
+			if(dir==0) {
+				dir+=1;
+			}
 			
+			car.add(new Car(dir, posX, 100, app));
+		}
+		
+		for (int i = 0; i < 5; i++) {
+			
+			dir=(int) app.random(-3,3);
+			posX= (int) app.random(50,750);
+			
+			if(dir==0) {
+				dir+=1;
+			}
+			
+			car.add(new Car(dir, posX, 200, app));
+		}
+		
+		for (int i = 0; i < 3; i++) {
+			
+			dir=(int) app.random(-3,3);
+			posX= (int) app.random(50,750);
+			
+			if(dir==0) {
+				dir+=1;
+			}
+			
+			car.add(new Car(dir, posX, 300, app));
+		}
+		
+		for (int i = 0; i < 5; i++) {
+			
+			dir=(int) app.random(-3,3);
+			posX= (int) app.random(50,750);
+			
+			if(dir==0) {
+				dir+=1;
+			}
+			
+			car.add(new Car(dir, posX, 400, app));
+		}
+		
+		for (int i = 0; i < 5; i++) {
+			
+			dir=(int) app.random(-3,3);
+			posX= (int) app.random(50,750);
+			
+			if(dir==0) {
+				dir+=1;
+			}
+			
+			car.add(new Car(dir, posX, 500, app));
+		}
+		
+		for (int i = 0; i < 5; i++) {
+			
+			dir=(int) app.random(-3,3);
+			posX= (int) app.random(50,750);
+			
+			if(dir==0) {
+				dir+=1;
+			}
+			
+			car.add(new Car(dir, posX, 600, app));
 		}
 	}
 	
@@ -76,6 +144,18 @@ public class Logic {
 		for (int i = 0; i < car.size(); i++) {
 			
 			car.get(i).paintObject();
+			Thread newCar = new Thread(car.get(i));
+			newCar.start();
+		}
+		
+		moveCar();
+	}
+	
+	public void moveCar() {
+		
+		for (int i = 0; i < car.size(); i++) {
+			
+			car.get(i).move();
 		}
 	}
 	
@@ -87,6 +167,13 @@ public class Logic {
 			app.fill(255);
 			app.rect(400, (i*100)+100, 800, 50);
 		}
+		
+		app.fill(0,0,255);
+		app.rect(400, 650, 800, 50);
+		
+	}
+	
+	public void colition() {
 		
 	}
 	
