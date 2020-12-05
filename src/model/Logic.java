@@ -1,6 +1,10 @@
 package model;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
+import java.util.LinkedList;
 
 import exception.Lose;
 import exception.Win;
@@ -12,23 +16,36 @@ public class Logic {
 	
 	private String [] file;
 	private ArrayList<Car> car;
+	private LinkedList<Information> information;
 	private Character character;
+	private SortTime sortTime;
 	
 	private int end;
 	private boolean gameOver;
+	private boolean win, lose;
+	private boolean time;
+	private boolean showRegister;
+	private int seg,min;
 	
 	public Logic (PApplet app) {
 		
 		this.app=app;
 		file = app.loadStrings("../Resources/file.txt");
 		car= new ArrayList<Car>();
+		information= new LinkedList<Information>();
+		sortTime= new SortTime();
 		
 		end=0;
 		gameOver=false;
+		win=false;
+		lose=false;
+		time=true;
+		showRegister=false;
+		seg=0;
+		min=0;
 		
 		readTxt();
 		createCars();
-		System.out.println("Autos= " + car.size());
 	}
 	
 	public void readTxt() {
@@ -111,6 +128,8 @@ public class Logic {
 
 			car.add(new Car(dir, posX, 600, app));
 		}
+		
+		System.out.println("Autos= " + car.size());
 	}
 	
 	public void paintCharacter() {
@@ -122,9 +141,12 @@ public class Logic {
 		} catch (Win e) {
 			// TODO Auto-generated catch block
 			System.out.println("You Win");
+			win=true;
 			gameOver=true;
 			end=1;
+			time=false;
 		}
+		
 	}
 	
 	public void moveDown() {
@@ -156,10 +178,12 @@ public class Logic {
 		} catch (Lose e) {
 			// TODO Auto-generated catch block
 			System.out.println("Game Over");
+			lose=true;
 			gameOver=true;
 			end=2;
-			
+			time=false;
 		}
+		
 		moveCar();
 	}
 	
@@ -185,6 +209,23 @@ public class Logic {
 		
 	}
 	
+	public void paintTime() {
+		
+		if (time==true) {
+			
+			if (app.frameCount % 60 == 0) {
+				seg += 1;
+			}
+			if (seg == 60) {
+				seg = 0;
+				min += 1;
+			}
+		}
+		
+		app.textSize(40);
+		app.text("Time: "+ min + ":" + seg, 400, 750);
+	}
+	
 	public void colition() throws Lose {
 		
 		for (int i = 0; i < car.size(); i++) {
@@ -197,8 +238,18 @@ public class Logic {
 			
 			if (PApplet.dist(posX1, posY1, posX2, posY2) < size) {
 				
-				throw new Lose("You Lose");
-				//System.out.println("Game Over");
+				if (lose==false && win==false) {
+					
+					String m= Integer.toString(min);
+					String s= Integer.toString(seg);
+					String time = m+":"+s;
+					Date date = new Date();
+					
+					information.add(new Information(date, time, app));
+					
+					throw new Lose("You Lose");
+				}
+				
 			}
 		}
 	}
@@ -206,8 +257,19 @@ public class Logic {
 	public void win() throws Win {
 		
 		if (character.getPosY()==650) {
+		
+			if (lose==false && win==false) {
+				
+				String m= Integer.toString(min);
+				String s= Integer.toString(seg);
+				String time = m+":"+s;
+				Date date = new Date();
+
+				information.add(new Information(date, time, app));
+				
+				throw new Win ("You Win");
+			}
 			
-			throw new Win ("You Win");
 		}
 	}
 	
@@ -222,6 +284,7 @@ public class Logic {
 			app.textSize(40);
 			app.text("You Win", 400, 400);
 			app.text("Press R to reset", 400, 450);
+			app.text("Press O to view the records", 400, 500);
 			
 			break;
 			
@@ -233,10 +296,50 @@ public class Logic {
 			app.textSize(40);
 			app.text("You Lose", 400, 400);
 			app.text("Press R to reset", 400, 450);
+			app.text("Press O to view the records", 400, 500);
 			break;
 
 		default:
 			break;
+		}
+	}
+	
+	public void paintInformation() {
+		
+		if (showRegister==true) {
+			
+			app.fill(255);
+			app.rect(400, 400, 800, 800);
+			
+			
+			for (int i = 0; i < information.size(); i++) {
+				
+				information.get(i).paintInformation(320, 150+(20*i));
+			}
+		}
+		
+	}
+	
+	public void sortList(char key) {
+		
+		if (showRegister==true) {
+			
+			switch (key) {
+			case 'n':
+				
+				Collections.sort(information);
+				
+				break;
+				
+			case 'p':
+				
+				Collections.sort(information, sortTime);
+				
+				break;
+
+			default:
+				break;
+			}
 		}
 	}
 	
@@ -245,25 +348,41 @@ public class Logic {
 		if (gameOver==true) {
 			if (key =='r') {
 				
-				if (car.size()==0) {
-					
-					car.clear();
-					end=0;
-					gameOver=false;
-					readTxt();
-					createCars();
-					
-					
-				} else {
-					
-					car.clear();
-					end=0;
-					gameOver=false;
-					readTxt();
-					createCars();
-				}
+				car.clear();
+				end=0;
+				gameOver=false;
+				readTxt();
+				createCars();
+				win=false;
+				lose=false;
+				min=0;
+				seg=0;
+				time=true;
+				showRegister=false;
 			}
+			
+			if (key == 'o') {
+				
+				showRegister=true;
+			}
+			
+			if (key == 'b') {
+				
+				showRegister=false;
+			}
+			
+			
 		}
 	}
+
+	public LinkedList<Information> getInformation() {
+		return information;
+	}
+
+	public void setInformation(LinkedList<Information> information) {
+		this.information = information;
+	}
+	
+	
 	
 }

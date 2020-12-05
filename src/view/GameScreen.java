@@ -45,4 +45,24 @@ public class GameScreen {
 		
 		controller.ending();
 	}
+	
+	public void sortList(char key) {
+		
+		controller.sortList(key);
+	}
+	
+	public void keyPressed(char key) {
+		
+		controller.keyPressed(key);
+	}
+	
+	public void paintTime() {
+		
+		controller.paintTime();
+	}
+	
+	public void paintInformation() {
+		
+		controller.paintInformation();
+	}
 }

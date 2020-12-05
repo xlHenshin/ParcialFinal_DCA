@@ -46,5 +46,25 @@ public class Controller {
 		
 		logic.ending();
 	}
+	
+	public void sortList(char key) {
+		
+		logic.sortList(key);
+	}
+	
+	public void keyPressed(char key) {
+		
+		logic.keyPressed(key);
+	}
+	
+	public void paintTime() {
+		
+		logic.paintTime();
+	}
+	
+	public void paintInformation() {
+		
+		logic.paintInformation();
+	}
 
 }

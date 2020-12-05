@@ -33,10 +33,15 @@ public class Main extends PApplet{
 		gameScreen.paintStreet();
 		gameScreen.paintCharacter();
 		gameScreen.paintCar();
+		gameScreen.paintTime();
 		gameScreen.ending();
+		gameScreen.paintInformation();
 	}
 	
 	public void keyPressed() {
+		
+		gameScreen.keyPressed(key);
+		gameScreen.sortList(key);
 		
 		if(keyCode == RIGHT) {
 			
