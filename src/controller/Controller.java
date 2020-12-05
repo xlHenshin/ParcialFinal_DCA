@@ -12,9 +12,34 @@ public class Controller {
 		logic= new Logic(app);
 	}
 	
-	public void pintar() {
+	public void paintCharacter() {
 		
-		logic.pintar();
+		logic.paintCharacter();
+	}
+
+	public void paintCar() {
+		
+		logic.paintCar();
+	}
+	
+	public void paintStreet() {
+		
+		logic.paintStreet();
+	}
+	
+	public void moveDown() {
+		
+		logic.moveDown();
+	}
+	
+	public void moveLeft() {
+		
+		logic.moveLeft();
+	}
+	
+	public void moveRight() {
+		
+		logic.moveRight();
 	}
 
 }

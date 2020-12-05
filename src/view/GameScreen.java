@@ -12,7 +12,32 @@ public class GameScreen {
 		controller = new Controller(app);
 	}
 	
-	public void pintar() {
-		controller.pintar();
+	public void paintCharacter() {
+		controller.paintCharacter();
+	}
+
+	public void paintCar() {
+		
+		controller.paintCar();
+	}
+	
+	public void paintStreet() {
+		
+		controller.paintStreet();
+	}
+	
+	public void moveDown() {
+		
+		controller.moveDown();
+	}
+	
+	public void moveLeft() {
+		
+		controller.moveLeft();
+	}
+	
+	public void moveRight() {
+		
+		controller.moveRight();
 	}
 }

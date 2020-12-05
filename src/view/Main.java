@@ -17,7 +17,7 @@ public class Main extends PApplet{
 	
 	public void settings() {
 		
-		size(800, 800);
+		size(800, 1000);
 	}
 	
 	public void setup() {
@@ -30,6 +30,32 @@ public class Main extends PApplet{
 		
 		background(0);
 		rectMode(CENTER);
-		gameScreen.pintar();
+		
+		gameScreen.paintStreet();
+		gameScreen.paintCharacter();
+		gameScreen.paintCar();
+	}
+	
+	public void keyPressed() {
+		
+		if(keyCode == RIGHT) {
+			
+			gameScreen.moveRight();
+		}
+		if(keyCode == LEFT) {
+			
+			gameScreen.moveLeft();
+		}
+		
+		if(keyCode == DOWN) {
+			
+			gameScreen.moveDown();
+		}
+	}
+	
+	public void mousePressed() {
+		
+		System.out.println(mouseX);
+		System.out.println(mouseY);
 	}
 }

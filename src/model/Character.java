@@ -9,16 +9,27 @@ public class Character extends Object{
 		// TODO Auto-generated constructor stub
 	}
 
-	@Override
+	
 	public void paintObject() {
-		// TODO Auto-generated method stub
 		
+		app.fill(0,255,0);
+		app.ellipse(posX, posY, 50, 50);
 	}
 
-	@Override
+
 	public void move() {
-		// TODO Auto-generated method stub
 		
+		posY+= 50;
+	}
+	
+	public void moveLeft() {
+		
+		posX-= 50;
+	}
+	
+	public void moveRight() {
+		
+		posX+= 50;
 	}
 
 }

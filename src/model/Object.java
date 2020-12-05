@@ -4,7 +4,7 @@ import processing.core.PApplet;
 
 public abstract class Object {
 
-	private PApplet app;
+	protected PApplet app;
 	protected int dir, posX, posY;
 	
 	public Object(int dir, int posX, int posY, PApplet app) {
