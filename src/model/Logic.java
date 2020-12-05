@@ -2,6 +2,8 @@ package model;
 
 import java.util.ArrayList;
 
+import exception.Lose;
+import exception.Win;
 import processing.core.PApplet;
 
 public class Logic {
@@ -12,11 +14,18 @@ public class Logic {
 	private ArrayList<Car> car;
 	private Character character;
 	
+	private int end;
+	private boolean gameOver;
+	
 	public Logic (PApplet app) {
 		
 		this.app=app;
 		file = app.loadStrings("../Resources/file.txt");
 		car= new ArrayList<Car>();
+		
+		end=0;
+		gameOver=false;
+		
 		readTxt();
 		createCars();
 		System.out.println("Autos= " + car.size());
@@ -57,73 +66,49 @@ public class Logic {
 		
 		for (int i = 0; i < 3; i++) {
 			
-			dir=(int) app.random(-3,3);
+			dir=(int) app.random(1,3);
 			posX= (int) app.random(50,750);
-			
-			if(dir==0) {
-				dir+=1;
-			}
 			
 			car.add(new Car(dir, posX, 100, app));
 		}
 		
 		for (int i = 0; i < 5; i++) {
 			
-			dir=(int) app.random(-3,3);
+			dir=(int) app.random(-3,-1);
 			posX= (int) app.random(50,750);
-			
-			if(dir==0) {
-				dir+=1;
-			}
 			
 			car.add(new Car(dir, posX, 200, app));
 		}
 		
 		for (int i = 0; i < 3; i++) {
 			
-			dir=(int) app.random(-3,3);
+			dir=(int) app.random(-3,-1);
 			posX= (int) app.random(50,750);
-			
-			if(dir==0) {
-				dir+=1;
-			}
 			
 			car.add(new Car(dir, posX, 300, app));
 		}
 		
 		for (int i = 0; i < 5; i++) {
 			
-			dir=(int) app.random(-3,3);
+			dir=(int) app.random(1,3);
 			posX= (int) app.random(50,750);
-			
-			if(dir==0) {
-				dir+=1;
-			}
 			
 			car.add(new Car(dir, posX, 400, app));
 		}
 		
 		for (int i = 0; i < 5; i++) {
 			
-			dir=(int) app.random(-3,3);
+			dir=(int) app.random(-3,-1);
 			posX= (int) app.random(50,750);
-			
-			if(dir==0) {
-				dir+=1;
-			}
 			
 			car.add(new Car(dir, posX, 500, app));
 		}
 		
 		for (int i = 0; i < 5; i++) {
 			
-			dir=(int) app.random(-3,3);
+			dir=(int) app.random(1,3);
 			posX= (int) app.random(50,750);
-			
-			if(dir==0) {
-				dir+=1;
-			}
-			
+
 			car.add(new Car(dir, posX, 600, app));
 		}
 	}
@@ -131,12 +116,30 @@ public class Logic {
 	public void paintCharacter() {
 		
 		character.paintObject();
+		
+		try {
+			win();
+		} catch (Win e) {
+			// TODO Auto-generated catch block
+			System.out.println("You Win");
+			gameOver=true;
+			end=1;
+		}
 	}
 	
-	public void pintar() {
+	public void moveDown() {
 		
-		app.fill(255);
-		app.rect(400, 400, 200, 200);
+		character.move();
+	}
+	
+	public void moveLeft() {
+		
+		character.moveLeft();
+	}
+	
+	public void moveRight() {
+		
+		character.moveRight();
 	}
 
 	public void paintCar() {
@@ -148,6 +151,15 @@ public class Logic {
 			newCar.start();
 		}
 		
+		try {
+			colition();
+		} catch (Lose e) {
+			// TODO Auto-generated catch block
+			System.out.println("Game Over");
+			gameOver=true;
+			end=2;
+			
+		}
 		moveCar();
 	}
 	
@@ -173,23 +185,85 @@ public class Logic {
 		
 	}
 	
-	public void colition() {
+	public void colition() throws Lose {
 		
+		for (int i = 0; i < car.size(); i++) {
+			
+			int posX1=car.get(i).getPosX();
+			int posY1=car.get(i).getPosY();
+			int posX2=character.getPosX();
+			int posY2=character.getPosY();
+			int size=50;
+			
+			if (PApplet.dist(posX1, posY1, posX2, posY2) < size) {
+				
+				throw new Lose("You Lose");
+				//System.out.println("Game Over");
+			}
+		}
 	}
 	
-	public void moveDown() {
+	public void win() throws Win {
 		
-		character.move();
+		if (character.getPosY()==650) {
+			
+			throw new Win ("You Win");
+		}
 	}
 	
-	public void moveLeft() {
+	public void ending() {
 		
-		character.moveLeft();
+		switch (end) {
+		case 1:
+			
+			app.fill(255);
+			app.rect(400, 400, 800, 800);
+			app.fill(0);
+			app.textSize(40);
+			app.text("You Win", 400, 400);
+			app.text("Press R to reset", 400, 450);
+			
+			break;
+			
+		case 2:
+			
+			app.fill(255);
+			app.rect(400, 400, 800, 800);
+			app.fill(0);
+			app.textSize(40);
+			app.text("You Lose", 400, 400);
+			app.text("Press R to reset", 400, 450);
+			break;
+
+		default:
+			break;
+		}
 	}
 	
-	public void moveRight() {
+	public void keyPressed(char key) {
 		
-		character.moveRight();
+		if (gameOver==true) {
+			if (key =='r') {
+				
+				if (car.size()==0) {
+					
+					car.clear();
+					end=0;
+					gameOver=false;
+					readTxt();
+					createCars();
+					
+					
+				} else {
+					
+					car.clear();
+					end=0;
+					gameOver=false;
+					readTxt();
+					createCars();
+				}
+			}
+		}
 	}
 	
 }

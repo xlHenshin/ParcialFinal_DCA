@@ -1,14 +1,13 @@
 package exception;
 
-public class Lose extends Exception{
+public class Win extends Exception{
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
-	public Lose(String message) {
+
+	public Win(String message) {
 		super();
 	}
-
 }

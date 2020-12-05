@@ -20,16 +20,31 @@ public class Character extends Object{
 	public void move() {
 		
 		posY+= 50;
+		
+		if (posY > 650) {
+			
+			posY-=50;
+		}
 	}
 	
 	public void moveLeft() {
 		
 		posX-= 50;
+		
+		if (posX < 0) {
+			
+			posX+=50;
+		}
 	}
 	
 	public void moveRight() {
 		
 		posX+= 50;
+		
+		if (posX > 800) {
+			
+			posX-=50;
+		}
 	}
 
 }

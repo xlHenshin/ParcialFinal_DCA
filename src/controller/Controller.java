@@ -41,5 +41,10 @@ public class Controller {
 		
 		logic.moveRight();
 	}
+	
+	public void ending() {
+		
+		logic.ending();
+	}
 
 }

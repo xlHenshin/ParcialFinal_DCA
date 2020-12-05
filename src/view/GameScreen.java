@@ -40,4 +40,9 @@ public class GameScreen {
 		
 		controller.moveRight();
 	}
+	
+	public void ending() {
+		
+		controller.ending();
+	}
 }

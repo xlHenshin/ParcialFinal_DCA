@@ -12,8 +12,6 @@ public class Main extends PApplet{
 	}
 	
 	private GameScreen gameScreen;
-	private GameOver gameOver;
-	private Sort sortScreen;
 	
 	public void settings() {
 		
@@ -30,10 +28,12 @@ public class Main extends PApplet{
 		
 		background(0);
 		rectMode(CENTER);
+		textAlign(CENTER);
 		
 		gameScreen.paintStreet();
 		gameScreen.paintCharacter();
 		gameScreen.paintCar();
+		gameScreen.ending();
 	}
 	
 	public void keyPressed() {
