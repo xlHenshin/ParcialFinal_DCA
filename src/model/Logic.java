@@ -46,8 +46,9 @@ public class Logic {
 		try {
 			readTxt();
 		} catch (Exception e) {
-			// TODO: handle exception
+			// TODO Auto-generated catch block
 			e.printStackTrace();
+			throw new RuntimeException();
 		}
 		
 		createCars();
@@ -75,6 +76,7 @@ public class Logic {
 				
 				car.add(new Car(dir, posX, posY, app));
 			}
+			
 		}
 		
 		System.out.println("Autos creados con el txt= " + car.size());
@@ -361,6 +363,7 @@ public class Logic {
 				} catch (Exception e) {
 					// TODO: handle exception
 					e.printStackTrace();
+					throw new RuntimeException();
 				}
 				
 				createCars();
