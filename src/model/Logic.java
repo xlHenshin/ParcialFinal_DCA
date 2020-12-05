@@ -48,7 +48,6 @@ public class Logic {
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			throw new RuntimeException();
 		}
 		
 		createCars();
@@ -363,7 +362,6 @@ public class Logic {
 				} catch (Exception e) {
 					// TODO: handle exception
 					e.printStackTrace();
-					throw new RuntimeException();
 				}
 				
 				createCars();
